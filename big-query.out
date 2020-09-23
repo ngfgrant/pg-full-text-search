@@ -1,0 +1,14 @@
+                                                            QUERY PLAN                                                             
+-----------------------------------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=483.75..175596.56 rows=50000 width=412) (actual time=97.884..16143.229 rows=222604 loops=1)
+   ->  Function Scan on plainto_tsquery q  (cost=0.25..0.26 rows=1 width=32) (actual time=2.620..2.635 rows=1 loops=1)
+   ->  Bitmap Heap Scan on test  (cost=483.50..175096.30 rows=50000 width=240) (actual time=95.182..13112.391 rows=222604 loops=1)
+         Recheck Cond: (tsv @@ q.q)
+         Rows Removed by Index Recheck: 2696856
+         Heap Blocks: exact=42328 lossy=134848
+         ->  Bitmap Index Scan on tsv_idx  (cost=0.00..471.00 rows=50000 width=0) (actual time=85.374..85.380 rows=222604 loops=1)
+               Index Cond: (tsv @@ q.q)
+ Planning Time: 1.640 ms
+ Execution Time: 17633.128 ms
+(10 rows)
+
